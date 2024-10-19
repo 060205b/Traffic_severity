@@ -24,7 +24,9 @@ After training and tuning, the best model was saved using pickle for future use.
 **Features**
 
 Machine Learning Prediction: A tuned Random Forest model is used to predict traffic accident severity (Low, Medium, High).
+
 Web Interface: Built with Flask, allowing users to interact with the model via a simple web form.
+
 Feature Importances: Visualized to show which features most impact accident severity predictions.How to Run the Project
 
 1. Clone the Repository
