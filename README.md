@@ -27,7 +27,9 @@ Machine Learning Prediction: A tuned Random Forest model is used to predict traf
 
 Web Interface: Built with Flask, allowing users to interact with the model via a simple web form.
 
-Feature Importances: Visualized to show which features most impact accident severity predictions.How to Run the Project
+Feature Importances: Visualized to show which features most impact accident severity predictions.
+
+**Steps to Run the Project**
 
 1. Clone the Repository
 git clone https://github.com/yourusername/traffic-accident-severity-prediction.git
@@ -44,14 +46,14 @@ python app.py
 The application will run on http://127.0.0.1:5000/. Open this link in your browser.
 
 ****Dependencies********
-The project uses the following libraries:
+
 Flask: To build the web application
 scikit-learn: For machine learning model building and tuning
 Pandas: For data manipulation
 Matplotlib: For plotting feature importances
 Pickle: To save and load machine learning models
 
-****Screenshots********
+****Screenshots****
 1. Home Page (Prediction Form)
 
 ![Screenshot 2024-10-20 001420](https://github.com/user-attachments/assets/ea2e17bd-0587-4663-a572-386c2fea76f8)
