@@ -1,11 +1,11 @@
 # Traffic_severity
 
-Road Traffic Accident Severity Prediction
-Overview
+**Road Traffic Accident Severity Prediction******
+**Overview******
 This project is a Traffic Accident Severity Prediction System that uses machine learning to predict the severity of a traffic accident based on input parameters such as the age of the driver, weather conditions, type of collision, driving experience, and cause of the accident. The model is built using a Random Forest Classifier, tuned with GridSearchCV for optimal hyperparameters. The application is implemented in Flask for a user-friendly web interface where users can input parameters and get predictions.
 
 
-**Modeling Process**
+****Modeling Process****
 
 Data Preprocessing:
 The dataset contains features like Age_band_of_driver, Driving_experience, Weather_conditions, Type_of_collision, and Cause_of_accident.
@@ -21,7 +21,7 @@ GridSearchCV was used to tune hyperparameters such as the number of estimators, 
 Model Saving:
 After training and tuning, the best model was saved using pickle for future use.
 
-**Features**
+****Features****
 
 Machine Learning Prediction: A tuned Random Forest model is used to predict traffic accident severity (Low, Medium, High).
 
@@ -43,7 +43,7 @@ pip install -r requirements.txt
 python app.py
 The application will run on http://127.0.0.1:5000/. Open this link in your browser.
 
-**Dependencies**
+****Dependencies********
 The project uses the following libraries:
 Flask: To build the web application
 scikit-learn: For machine learning model building and tuning
@@ -51,7 +51,7 @@ Pandas: For data manipulation
 Matplotlib: For plotting feature importances
 Pickle: To save and load machine learning models
 
-**Screenshots**
+****Screenshots********
 1. Home Page (Prediction Form)
 
 ![Screenshot 2024-10-20 001420](https://github.com/user-attachments/assets/ea2e17bd-0587-4663-a572-386c2fea76f8)
