@@ -2,14 +2,29 @@ from flask import Flask, request, render_template
 import numpy as np
 import pickle
 import os
+import pandas as pd
 
 app = Flask(__name__)
 
-# Load the trained LogisticRegression model
+# Load the trained RandomForest model and scaler
 models_dir = 'models_pickle_file'
-model_file = os.path.join(models_dir, 'tuned_random_forest_model.pkl')
-with open(model_file, 'rb') as f:
-    rf_model = pickle.load(f)
+model_file = os.path.join(models_dir, 'weighted_random_forest_model.pkl')
+scaler_file = os.path.join(models_dir, 'scaler_for_weighted_random_forest.pkl')
+
+# Load the model and scaler
+try:
+    with open(model_file, 'rb') as f:
+        rf_model = pickle.load(f)
+    print("Random Forest model loaded successfully.")
+except Exception as e:
+    print(f"Error loading Random Forest model: {e}")
+
+try:
+    with open(scaler_file, 'rb') as f:
+        scaler = pickle.load(f)
+    print("Scaler loaded successfully.")
+except Exception as e:
+    print(f"Error loading scaler: {e}")
 
 @app.route('/', methods=['GET'])
 def index():
@@ -17,18 +32,17 @@ def index():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    print("Prediction function called")
     try:
-        # Get the form values
+        # Get form values
         age_range = int(request.form['ageRange'])
         weather = request.form['weather'].strip()
         collision = request.form['collision'].strip()
         experience = request.form['experience'].strip()
         cause = request.form['cause'].strip()
 
-        print("Form values:", age_range, weather, collision, experience, cause)
+        print("Form values received:", age_range, weather, collision, experience, cause)
 
-        # Categorical mappings (same as model training)
+        # Categorical mappings
         weather_mapping = {
             "Normal": 0,
             "Raining": 1,
@@ -84,7 +98,7 @@ def predict():
             4: 3
         }
 
-        # Convert categorical inputs to numerical values
+        # Convert inputs to numerical values
         weather_num = weather_mapping.get(weather, -1)
         collision_num = collision_mapping.get(collision, -1)
         experience_num = experience_mapping.get(experience, -1)
@@ -93,20 +107,46 @@ def predict():
 
         print("Numerical values:", weather_num, collision_num, experience_num, cause_num, age_range_num)
 
-        # Prepare the input array for prediction
-        input_data = np.array([[age_range_num, weather_num, collision_num, experience_num, cause_num]])
-        print("Input data shape:", input_data.shape)
+        # Prepare the input DataFrame for prediction
+        input_data = pd.DataFrame({
+            'Age_band_of_driver': [age_range_num], 
+            'Weather_conditions': [weather_num], 
+            'Type_of_collision': [collision_num], 
+            'Driving_experience': [experience_num], 
+            'Cause_of_accident': [cause_num]
+        })
 
-        # Make the prediction
-        prediction = rf_model.predict(input_data)[0]
+        # One-hot encode the DataFrame
+        input_data_encoded = pd.get_dummies(input_data, drop_first=True)
+
+        # Adjust for missing features based on the scaler's input
+        feature_columns = scaler.get_feature_names_out()  # Get feature names used by scaler
+        missing_cols = set(feature_columns) - set(input_data_encoded.columns)
+        
+        # Fill in missing features with zeros
+        for col in missing_cols:
+            input_data_encoded[col] = 0  # Fill with zeros for missing features
+        
+        input_data_encoded = input_data_encoded[feature_columns]  # Reorder to match model
+
+        print("Input data shape (after encoding):", input_data_encoded.shape)
+
+        # Scale the input data
+        input_data_scaled = scaler.transform(input_data_encoded)
+
+        print("Input data (after scaling):", input_data_scaled)
+        print("Input data shape (after scaling):", input_data_scaled.shape)
+
+        # Make the prediction using the loaded model
+        prediction = rf_model.predict(input_data_scaled)[0]
         print("Prediction:", prediction)
 
-        # Map the prediction to a string
+        # Map prediction to severity level
         severity_mapping = {0: "Low", 1: "Medium", 2: "High"}
         prediction_str = severity_mapping.get(int(prediction), "Unknown")
         print("Prediction string:", prediction_str)
 
-        # Provide suggestions based on the prediction
+        # Provide suggestions based on prediction
         if prediction_str == "High":
             suggestion = "Ensure to take all necessary precautions when driving. Avoid busy roads if possible."
         elif prediction_str == "Medium":
