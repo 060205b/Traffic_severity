@@ -10,23 +10,35 @@
 
     <style>
         body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: url('static/image/image1.jpg');
-    background-size: cover;
-    align-items: center; /* Center all items horizontally */
-    height: 100vh;
-    margin: 0;
-}
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; /* Center all items horizontally */
+            height: 100vh;
+            margin: 0;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            position: relative; /* Make body relative for absolute positioning of containers */
+        }
 
-header {
-    text-align: center; /* Keep this as is */
-    margin-bottom: 20px;
-    font-size: 20px;
-}
+        /* Video Background Styling */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Puts the video behind the content */
+        }
 
-.form-container {
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+            z-index: 1; /* Make sure it's above the video */
+        }
+
+        .form-container {
     display: flex;
     flex-direction: column;
     align-items: center; /* Center items horizontally in the form */
@@ -42,34 +54,39 @@ header {
     line-height: 50px; 
 }
 
-#ageLabel {
-            font-size: 15px; /* Change this value to adjust size */ /* Optional: Make it bold */
-            color: #333; /* Optional: Change color */
-}
+        /* Center the button */
+        .btn-primary {
+            background-color: #4b9ae9; /* Set your desired background color */
+            color: rgb(23, 22, 22); /* Set the text color to white */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Optional: Add border radius */
+            padding: 10px 20px; /* Add some padding */
+            transition: background-color 0.3s; /* Smooth transition */
+        }
 
-/* Center the button */
-.btn-primary {
-    margin-top: 20px; /* Add margin to separate from other elements */
-    padding: 10px 20px;  
-    font-size: 1.1rem;  
-    justify-content: center; 
-    align-self: center; /* Center the button */
-}
+        .btn-primary:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .form-container {
-        padding: 20px;  
-        max-width: 90%;  
-        height: auto;  
-    }
-}
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+                max-width: 90%;
+            }
+        }
 
         
     </style>
 </head>
 
 <body>
+
+    <video class="video-background" autoplay loop muted>
+        <source src="{{ url_for('static', filename='video/Index_bg_video.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
     <header>
         <h1>Predict Traffic Accident Severity</h1>
     </header>

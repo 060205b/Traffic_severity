@@ -2,18 +2,27 @@
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: medium;
-    background: url('static\image\image1.jpg') no-repeat center center fixed; /* Use forward slashes */
+    background: url('static/image/image1.jpg') no-repeat center center fixed; /* Use forward slashes */
     background-size: cover; /* Ensures the image covers the entire background */
     color: #282525;
+    display: flex;
+    flex-direction: column; /* Arranges elements in a column */
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Ensures full height of viewport */
+    margin: 0; /* Removes default margin */
 }
 
 /* Transparent Form Container */
-.form-container {
-    background: rgba(185, 174, 174, 0.8);
+.result-container {
+    background: rgba(185, 174, 174, 0.8); /* Adjusted for transparency */
     padding: 30px;
-    border-radius: 10px;
+    border-radius: 20px;
     max-width: 800px;
-    margin: 50px auto;
+    width: 60%; /* Makes the container width responsive */
+    margin-bottom: 30px; /* Added spacing below the form */
+    text-align: center;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Adds shadow for depth */
 }
 
 /* Form Controls */
@@ -32,26 +41,39 @@ body {
     color: #121212;
 }
 
-/* Slider Label */
-.slider-label {
-    color: #1f1f1f;
+/* Plot Section */
+.plot-container-wrapper {
+    display: flex;
+    justify-content: space-around; /* Plots side by side */
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+    gap: 20px; /* Adds space between plots */
 }
 
-/* Selected Text Display */
-.selected-text {
-    font-weight: bold;
-    display: block;
-    margin-top: 5px;
-    color: #a69c9c;
-    /* Increase font size for dropdown lists */
-    font-size: 1.2rem;
+.plot-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Keeps the transparency */
+    border-radius: 15px;
+    padding: 20px;
+    max-width: 45%; /* Controls width for each plot */
+    flex: 1; /* Ensure the plots take up equal space */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-select {
-    font-family: Verdana, Geneva, Tahoma, sans-serif; /* Change to your desired font family */
-    background-color: #b4b2b2;
+.plot-container h3 {
+    margin-bottom: 20px;
+    color: #333;
 }
 
+/* Responsive Image */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
 
 /* Button Styles */
 .btn-primary {
@@ -64,4 +86,14 @@ select {
     display: none;
     margin-left: 10px;
     color: #4691e2;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .plot-container-wrapper {
+        flex-direction: column; /* Stack the plots vertically on small screens */
+    }
+    .plot-container {
+        max-width: 100%; /* Full width for smaller screens */
+    }
 }
