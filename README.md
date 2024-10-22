@@ -53,11 +53,8 @@ Pandas: For data manipulation
 Matplotlib: For plotting feature importances
 Pickle: To save and load machine learning models
 
-****Screenshots****
+****videos of web application****
 1. Home Page (Prediction Form)
-
-![Screenshot 2024-10-20 001420](https://github.com/user-attachments/assets/ea2e17bd-0587-4663-a572-386c2fea76f8)
 
 2. Prediction Result
 
-![Screenshot 2024-10-20 001504](https://github.com/user-attachments/assets/0ae34ae4-f373-488c-bdf6-7adb5366f06c)
