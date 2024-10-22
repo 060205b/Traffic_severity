@@ -58,3 +58,5 @@ Pickle: To save and load machine learning models
 
 2. Prediction Result
 
+Both are in the Prediction video
+
